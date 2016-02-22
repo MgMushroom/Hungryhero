@@ -12,6 +12,10 @@ package
 		[Embed(source="../Media/Graphics/bgWelcome.jpg")]
 		public static const BgWelcome:Class;
 		
+		[Embed(source="../Media/Graphics/bgLayer1.jpg")]
+		public static const BgLayer1:Class;
+		
+		
 		/*[Embed(source="../Media/Graphics/welcome_hero.png")]
 		public static const WelcomeHero:Class;
 		

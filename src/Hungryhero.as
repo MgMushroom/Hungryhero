@@ -5,6 +5,7 @@ package
 	import net.hires.debug.Stats;
 	
 	import screens.InGame;
+	import screens.Welcome;
 	
 	import starling.core.Starling;
 	

@@ -25,13 +25,13 @@ package
 			
 			this.addEventListener(events.NavigationEvent.CHANGE_SCREEN, onChangeScreen);
 			
-			screenInGame = new InGame;
-			this.addChild(screenInGame);
-			screenInGame.disposeTemporarily();
-			
 			screenWelcome = new Welcome();
 			this.addChild(screenWelcome);
 			screenWelcome.initialized();
+			
+			screenInGame = new InGame;
+			this.addChild(screenInGame);
+			screenInGame.disposeTemporarily();
 		}
 		
 		private function onChangeScreen(event:NavigationEvent):void
