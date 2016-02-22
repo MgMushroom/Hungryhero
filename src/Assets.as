@@ -12,7 +12,7 @@ package
 		[Embed(source="../Media/Graphics/bgWelcome.jpg")]
 		public static const BgWelcome:Class;
 		
-		[Embed(source="../Media/Graphics/welcome_hero.png")]
+		/*[Embed(source="../Media/Graphics/welcome_hero.png")]
 		public static const WelcomeHero:Class;
 		
 		[Embed(source="../Media/Graphics/welcome_title.png")]
@@ -22,13 +22,13 @@ package
 		public static const WelcomePlayBtn:Class;
 		
 		[Embed(source="../Media/Graphics/welcome_aboutButton.png")]
-		public static const WelcomeAboutBtn:Class;
+		public static const WelcomeAboutBtn:Class;*/
 		
 		private static var gameTextures:Dictionary = new Dictionary();
 		private static var gameTextureAtlas:TextureAtlas;
 		
 		[Embed(source="../Media/Graphics/mySpritesheet.png")]
-		public static const AtlasTextureGame:Class;
+		public static const AtlasTextureGame:Class; 
 		
 		[Embed(source="../Media/Graphics/mySpritesheet.xml", mimeType = "application/octet-stream")]
 		public static const AtlasXmlGame:Class;

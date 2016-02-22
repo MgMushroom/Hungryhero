@@ -3,6 +3,8 @@ package objects
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.core.Starling;
+	import starling.textures.Texture
 	
 	public class Hero extends Sprite
 	{	
@@ -21,7 +23,7 @@ package objects
 		
 		private function createHeroArt():void
 		{
-			heroArt = new MovieClip(Assets.getAtlas().getTexture("fly_"), 20);
+			heroArt = new MovieClip(Assets.getAtlas().getTextures("fly_"), 20);
 			heroArt.x = Math.ceil(-heroArt.width/2);
 			heroArt.y = Math.ceil(-heroArt.height/2);
 			
