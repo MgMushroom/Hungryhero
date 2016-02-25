@@ -111,7 +111,7 @@ package screens
 						hero.x += ((stage.stageWidth * 0.5 * 0.5 + 10) - hero.x) * 0.05;
 						hero.y = stage.stageHeight * 0.5;
 						
-						playerSpeed = (MIN_SPEED - playerSpeed) * 0.05;
+						playerSpeed += (MIN_SPEED - playerSpeed) * 0.05;
 						bg.speed = playerSpeed * elapsed;
 					}
 					else

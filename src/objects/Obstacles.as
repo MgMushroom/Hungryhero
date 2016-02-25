@@ -22,10 +22,11 @@ package objects
 		private var obstacleAnimation:MovieClip;
 		private var watchOutAnimation:MovieClip;
 		
-	
 		
-		public function Obstacles(_type:int,_distance:int,_watchOut:Boolean,_speed:int = 0)
+		public function Obstacles(_type:int, _distance:int, _watchOut:Boolean = true, _speed:int = 0)
 		{
+		
+		super();
 		
 		this._type = _type;
 		this._distance = _distance;
@@ -36,69 +37,61 @@ package objects
 			
 		this.addEventListener(Event.ADDED_TO_STAGE,onAddedToStage);	
 		
-		createObstacleArt();
-		createObstacleCrashArt();
-		createWatchOutAnimation();
-		}
-		
-		private function onAddedToStage(event:Event):void
-		{
-			this.removeEventListener(Event.ADDED_TO_STAGE,onAddedToStage);	
-			
 		}
 		
 		public function get speed():int
 		{
 			return _speed;
 		}
-
+		
 		public function set speed(value:int):void
 		{
 			_speed = value;
 		}
-
+		
 		public function get distance():int
 		{
 			return _distance;
 		}
-
+		
 		public function set distance(value:int):void
 		{
 			_distance = value;
 		}
-
+		
 		public function get position():String
 		{
 			return _position;
 		}
-
+		
 		public function set position(value:String):void
 		{
 			_position = value;
 		}
-
+		
 		public function get alreadyHit():Boolean
 		{
 			return _alreadyHit;
 		}
-
+		
 		public function set alreadyHit(value:Boolean):void
 		{
 			_alreadyHit = value;
+			
 			if(value) 
 			{
 				obstacleCrashImage.visible = true;
 				if(_type == 4)obstacleAnimation.visible = false;
-			
+				else obstacleImage.visible = false;
 				
 			}
 		}
-
+		
 		public function get watchOut():Boolean
 		{
 			return _watchOut;
 		}
-
+		
 		public function set watchOut(value:Boolean):void
 		{
 			_watchOut = value;
@@ -108,12 +101,23 @@ package objects
 				else watchOutAnimation.visible = false;
 			}
 		}
+		
+		private function onAddedToStage(event:Event):void
+		{
+			this.removeEventListener(Event.ADDED_TO_STAGE,onAddedToStage);	
+			
+			createObstacleArt();
+			createObstacleCrashArt();
+			createWatchOutAnimation();
+		}
+		
+		
 
 		private function createWatchOutAnimation():void
 		{
-			watchOutAnimation = new MovieClip(Assets.getAtlas().getTextures("obstacle" + _type + "watchOut"), 10);
+			watchOutAnimation = new MovieClip(Assets.getAtlas().getTextures("watchOut_"), 10);
 			Starling.juggler.add(watchOutAnimation);
-			this.addChild(watchOutAnimation);
+			
 			if(_type == 4)
 			{
 				watchOutAnimation.x = -watchOutAnimation.texture.width;
