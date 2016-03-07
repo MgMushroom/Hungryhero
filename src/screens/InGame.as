@@ -13,7 +13,10 @@ package screens
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
+	import starling.text.TextField;
 	import starling.utils.deg2rad;
+	
+	
 	
 	public class InGame extends Sprite
 	{	
@@ -30,7 +33,6 @@ package screens
 		private var hitObstacle:Number = 0;
 		private const MIN_SPEED:Number = 650;
 		
-		private var scoreDistance:int;
 		private var obstacleGapCount:int;
 		
 		private var gameArea:Rectangle;
@@ -42,6 +44,14 @@ package screens
 		private var obstaclesToAnimate:Vector.<Obstacles>; 
 		private var itemsToAnimate:Vector.<Item>;
 		
+		private var feetDistanceText:TextField;
+		private var scoreItem:TextField;
+		private var scoreTotal:TextField;
+		private var border:TextField;
+		private var total:int;
+		private var score:int;
+		private var scoreDistance:int;
+		
 		public function InGame()
 		{
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE,onAddedToStage);	
@@ -51,6 +61,29 @@ package screens
 		{
 			this.removeEventListener(starling.events.Event.ADDED_TO_STAGE,onAddedToStage);	
 			drawHero();
+			drawScore();
+			
+		
+		}
+		
+		private function drawScore():void
+		{
+			border = new TextField(800, 80, "", "MyFontName", 24, 0xffffff);
+			border.border = true;
+			//this.addChild(border);
+			
+			feetDistanceText = new TextField(300,100,"Distance: 0 ft", "MyFontName", 24, 0xffffff); 
+			feetDistanceText.x += 100;
+			this.addChild(feetDistanceText);
+			
+			scoreItem = new TextField(300,100,"Food: 0 ", "MyFontName", 24,0xffffff);
+			scoreItem.x += 250;
+			this.addChild(scoreItem);
+			
+			scoreTotal = new TextField(300,100,"TotalScore: 0 ","MyFontName", 24,0xffffff);
+			scoreTotal.x += 400;
+			this.addChild(scoreTotal);
+			
 		}
 		
 		private function drawHero():void
@@ -173,8 +206,17 @@ package screens
 					playerSpeed -= (playerSpeed - MIN_SPEED) * 0.01;
 					bg.speed = playerSpeed * elapsed;
 					scoreDistance += (playerSpeed * elapsed) * 0.1;
-					trace(scoreDistance);
 					
+					if(score < 0)
+					{
+						score = 0;
+					}
+					
+					total = (scoreDistance/100) * (score/0.5);
+					
+					feetDistanceText.text = "Distance: " + scoreDistance + " ft";
+					scoreItem.text = "Food: " + score;
+					scoreTotal.text = "TotalScore: " + total;
 					initObstacle();
 					animateObstacle();
 					
@@ -198,6 +240,7 @@ package screens
 				if(itemToTrack.bounds.intersects(hero.bounds))
 				{
 					itemsToAnimate.splice(i, 1);
+					score += 1;
 					this.removeChild(itemToTrack);
 				}
 				

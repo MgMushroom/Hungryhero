@@ -1,10 +1,13 @@
 package
 {
 	import flash.display.Bitmap;
+	import flash.text.Font;
 	import flash.utils.Dictionary;
 	
+	import starling.text.BitmapFont;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
+	import starling.text.TextField;
 	
 	public class Assets
 	{
@@ -36,6 +39,28 @@ package
 		
 		[Embed(source="../Media/Graphics/mySpritesheet.xml", mimeType = "application/octet-stream")]
 		public static const AtlasXmlGame:Class;
+		
+		[Embed(source="../Media/Fonts/Bitmap/fontRegular.png")]
+		public static const FontTexture:Class; 
+		
+		[Embed(source="../Media/Fonts/Bitmap/fontRegular.fnt", mimeType = "application/octet-stream")]
+		public static const FontXML:Class;
+		
+		public static var myFont:BitmapFont;
+		
+		[Embed(source="../Media/Fonts/Embedded/BADABB__.TTF", fontFamily="MyFontName", embedAsCFF="false")]
+		public static var MyFont:Class;
+		
+		public static function getFont():BitmapFont
+		{
+			var fontTexture:Texture = Texture.fromBitmap(new fontTexture());
+			var fontXML:XML = XML( new FontXML());
+			var font:BitmapFont = new BitmapFont(fontTexture, fontXML);
+			
+			TextField.registerBitmapFont(font);
+			
+			return font;
+		}
 		
 		public static function getAtlas():TextureAtlas
 		{
