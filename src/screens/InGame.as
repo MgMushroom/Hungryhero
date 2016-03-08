@@ -7,6 +7,7 @@ package screens
 	import objects.Hero;
 	import objects.Item;
 	import objects.Obstacles;
+	import objects.Particles;
 	
 	import starling.display.Button;
 	import starling.display.Sprite;
@@ -43,6 +44,7 @@ package screens
 		
 		private var obstaclesToAnimate:Vector.<Obstacles>; 
 		private var itemsToAnimate:Vector.<Item>;
+		private var eatParticlesToAnimate:Vector.<Particles>;
 		
 		private var feetDistanceText:TextField;
 		private var scoreItem:TextField;
@@ -128,6 +130,8 @@ package screens
 			
 			obstaclesToAnimate = new Vector.<Obstacles>();
 			itemsToAnimate = new Vector.<Item>();
+			eatParticlesToAnimate = new Vector.<Particles>();
+			
 			startButton.addEventListener(Event.TRIGGERED, onStartButtonClick);
 		}
 		
@@ -222,10 +226,43 @@ package screens
 					
 					createFoodItems();
 					animateItems();
+					animateEatParticles();
+					
 					break;
 				case "over":
 					break;
 			}	
+		}
+		
+		private function animateEatParticles():void
+		{
+			for(var i:uint;i<eatParticlesToAnimate.length;i++)
+			{
+				var eatParticlesToTrack:Particles = eatParticlesToAnimate[i];
+				
+				if(eatParticlesToTrack)
+				{
+					eatParticlesToTrack.scaleX -= 0.03;
+					eatParticlesToTrack.scaleY = eatParticlesToTrack.scaleX;
+					
+					eatParticlesToTrack.y -= eatParticlesToTrack.speedY;
+					eatParticlesToTrack.speedY -= eatParticlesToTrack.speedY * 0.2;
+				
+					eatParticlesToTrack.x += eatParticlesToTrack.speedX;
+					eatParticlesToTrack.speedX--;
+					
+					eatParticlesToTrack.rotation += deg2rad(eatParticlesToTrack.spin)
+					eatParticlesToTrack.spin *= 1.1;
+					
+					if(eatParticlesToTrack.scaleY <= 0.02)	
+					{
+						eatParticlesToAnimate.splice(i, 1);
+						this.removeChild(eatParticlesToTrack);
+						eatParticlesToTrack = null;
+					}
+				}
+			}
+			
 		}
 		
 		private function animateItems():void
@@ -239,6 +276,9 @@ package screens
 				
 				if(itemToTrack.bounds.intersects(hero.bounds))
 				{
+					
+					createEatParticles(itemToTrack);
+					
 					itemsToAnimate.splice(i, 1);
 					score += 1;
 					this.removeChild(itemToTrack);
@@ -251,6 +291,30 @@ package screens
 					this.removeChild(itemToTrack);
 				}
 			}
+		}
+		
+		private function createEatParticles(itemToTrack:Item):void
+		{
+			var count:int = 5;
+			
+			while(count > 0)
+			{
+				count--;
+				var eatParticles:Particles = new Particles;
+				this.addChild(eatParticles);
+				
+				eatParticles.x = itemToTrack.x + Math.random()*40 - 20;
+				eatParticles.y = itemToTrack.y - Math.random()*40;
+				
+				eatParticles.speedX = Math.random()*2+1;
+				eatParticles.speedY = Math.random()*5;
+				eatParticles.spin = Math.random()*15;
+				
+				eatParticles.scaleX = eatParticles.scaleY = Math.random()*0.3 + 0.3;
+				
+				eatParticlesToAnimate.push(eatParticles);
+			}
+			
 		}
 		
 		private function createFoodItems():void
